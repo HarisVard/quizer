@@ -1,5 +1,5 @@
 body {
-    background-image: url(../assets/7a12cfcaac204c502c0518290ffd0fdf.jpg);
+    background-image: ('./assets/7a12cfcaac204c502c0518290ffd0fdf.jpg');
     background-size: cover;
     background-position: center;
   }
