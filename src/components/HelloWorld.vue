@@ -33,20 +33,5 @@ export default {
 </script>
 
 <style>
-  /* Add a spooky background image */
-  body {
-    background-image: url('../assets/riccardo-chiarini-XwIp301UMv8-unsplash.jpg');
-    background-size: cover;
-  }
-
-  /* Add some spooky styles to the v-card */
-  .v-card {
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-  }
-
-  /* Add some custom styles to the v-text-field */
-  .v-text-field input {
-    color: white;
-  }
+  /* Your component styles go here */
 </style>
