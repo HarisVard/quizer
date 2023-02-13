@@ -5,13 +5,21 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-  },
-  getters: {
+    name: '',
   },
   mutations: {
+    setName (state, name) {
+      state.name = name
+    },
   },
   actions: {
+    updateName ({ commit }, name) {
+      commit('setName', name)
+    },
   },
-  modules: {
+  getters: {
+    fullName (state) {
+      return `${state.name} `
+    }
   }
 })

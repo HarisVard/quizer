@@ -11,6 +11,10 @@ const routes = [
     component: WelcomePage
   },
   {
+    path: '/MainGame',
+    name: 'MainGame',
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting

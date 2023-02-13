@@ -7,14 +7,16 @@
                 <v-text-field v-model="name" label="Name"></v-text-field>
             </v-card-text>
             <v-card-actions>
-                <router-link :to="`maingame`"></router-link>
-                <v-btn color="primary" @click="onSubmit">Enter</v-btn>
+                <router-link :to="`/maingame/${name}`">
+          <v-btn color="primary">Enter</v-btn>
+        </router-link>
             </v-card-actions>
         </v-card>
     </v-app>
 </template>
 
 <script>
+import {mapActions } from 'vuex'
 export default {
     data() {
         return {
@@ -22,8 +24,10 @@ export default {
         }
     },
     methods: {
+        ...mapActions(['updateName']),
         onSubmit() {
             console.log(`Welcome, ${this.name}!`)
+            this.$store.commit("setName", this.name);
         }
     }
 }
