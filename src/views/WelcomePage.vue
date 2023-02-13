@@ -1,6 +1,6 @@
 <template>
     <v-app class="spooky-background">
-      <v-card class="mx-auto my-5" max-width="400">
+      <v-card class="mx-auto my-auto" max-width="400">
         <v-card-title class="headline">Welcome to the Spooky World!</v-card-title>
         <v-card-text>
           <p>What's your name, brave adventurer?</p>
@@ -22,9 +22,7 @@
     },
     methods: {
       onSubmit() {
-        console.log(`Welcome, ${this.name}!`)
         this.$store.commit("setName", this.name);
-        console.log(this.$store.state.name)
         this.$router.push('maingame');
       }
     }
@@ -32,12 +30,6 @@
   </script>
   
   <style>
-    @import "~vuetify/dist/vuetify.min.css";
-  
-    .spooky-background {
-      background-image: url('../assets/riccardo-chiarini-XwIp301UMv8-unsplash.jpg');
-      background-size: cover;
-      height: 100vh;
-    }
-  </style>
+  @import "../style.css";
+</style>
   
