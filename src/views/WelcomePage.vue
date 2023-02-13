@@ -7,9 +7,9 @@
                 <v-text-field v-model="name" label="Name"></v-text-field>
             </v-card-text>
             <v-card-actions>
-                <router-link :to="`/maingame/${name}`">
+               
           <v-btn color="primary">Enter</v-btn>
-        </router-link>
+        
             </v-card-actions>
         </v-card>
     </v-app>
@@ -27,7 +27,7 @@ export default {
         ...mapActions(['updateName']),
         onSubmit() {
             console.log(`Welcome, ${this.name}!`)
-            this.$store.commit("setName", this.name);
+            
         }
     }
 }
