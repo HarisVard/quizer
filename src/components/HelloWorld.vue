@@ -1,37 +1,30 @@
 <template>
-  <v-app>
-    <v-container class="d-flex align-center justify-center" fluid>
-      <v-card class="elevation-12" dark>
-        <v-card-title class="headline">Welcome to the Dark World</v-card-title>
-        <v-card-text>
-          <p>Enter your name to enter the dark world:</p>
-          <v-text-field v-model="username" label="Name"></v-text-field>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn color="primary" @click="enterDarkWorld">Enter</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-container>
+  <v-app >
+    <v-card class="mx-auto my-auto" max-width="400">
+      <v-card-title class="headline">Welcome to the Spooky World!</v-card-title>
+      <v-card-text>
+        <p>What's your name, brave adventurer?</p>
+        <v-text-field v-model="name" label="Name"></v-text-field>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn color="primary" @click="onSubmit">Enter</v-btn>
+      </v-card-actions>
+    </v-card>
   </v-app>
 </template>
 
 <script>
 export default {
-  data () {
+  data() {
     return {
-      username: ''
+      name: ''
     }
   },
   methods: {
-    enterDarkWorld () {
-      if (this.username) {
-        this.$emit('enteredDarkWorld', this.username)
-      }
+    onSubmit() {
+      this.$store.commit("setName", this.name);
+      this.$router.push('maingame');
     }
   }
 }
 </script>
-
-<style>
-  /* Your component styles go here */
-</style>
