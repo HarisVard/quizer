@@ -167,7 +167,7 @@ export default {
       return this.selectedAnswer === choice;
     },
     async generateQuestions() {
-      const url = `https://opentdb.com/api.php?amount=${this.question_num}`;
+      const url = `https://opentdb.com/api.php?amount=${this.question_num}&difficulty=${this.difficulty.toLowerCase()}`;
       const response = await axios.get(url);
       const results = response.data.results;
 
