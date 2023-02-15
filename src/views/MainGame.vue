@@ -3,7 +3,7 @@
     <v-container>
       <v-app-bar color="#704214" height="50">
         <v-toolbar-title class="ml-0 mr-auto"
-          style="color: black;  font-weight: bold;">Quizer</v-toolbar-title>
+          style="color: black;  font-weight: bold;font-size: 30px;">Quizer</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-row class="hidden-sm-and-down">
           <v-col cols="9"></v-col>
@@ -32,31 +32,32 @@
       <v-card class="mx-auto my-auto" max-width="600" style="background-color: #A67C52;">
         <v-row>
           <v-col></v-col>
-          <v-col align="center" >Welcome!</v-col>
+          <v-col align="center" style="font-weight: bold; font-size: 25px;" elevation="5">Welcome!</v-col>
           <v-col></v-col>
         </v-row>
         <v-row>
-          <v-col align="center" >Player: {{ name }}</v-col>
-          <v-col align="center" >Difficulty: {{
+          <v-col align="center" style="font-weight: bold; font-size: 17px;" elevation="5">Player: {{ name }}</v-col>
+          <v-col align="center" style="font-weight: bold; font-size: 17px;" elevation="5">Difficulty: {{
             difficulty
           }}</v-col>
-          <v-col align="center" >Questions: {{
+          <v-col align="center" style="font-weight: bold; font-size: 17px;" elevation="5">Questions: {{
             question_num
           }}</v-col>
         </v-row>
-
         <v-container>
           <template>
             <div>
               <div v-if="end">
 
                 <v-row>
-                  <v-col align="center" ><span
-                      style="color: white;">Score: {{ score }}</span></v-col>
+                  <v-col align="center"><span style="font-weight: bold; font-size: 17px;" elevation="5">Score: {{
+                    score
+                  }}</span></v-col>
                 </v-row>
                 <v-row>
-                  <v-col align="center" ><span
-                      style="color: white;">Result: {{ performance }}</span></v-col>
+                  <v-col align="center"><span style="font-weight: bold; font-size: 17px;" elevation="5">Result: {{
+                    performance
+                  }}</span></v-col>
                 </v-row>
               </div>
 
@@ -66,34 +67,36 @@
                 <div v-if="!started">
                   <v-row>
                     <v-col align="center">
-                      <button @click="startQuiz" class="quiz-button">Start Quiz</button>
+                      <button @click="startQuiz" class="quiz-button" style="font-weight: bold; font-size: 18px;"
+                        elevation="5">Start Quiz</button>
                     </v-col>
-
-
                   </v-row>
                 </div>
                 <div v-else>
                   <v-row>
-                    <v-col align="center" >
-                      <h2>{{ questions[currentQuestionIndex].question }}</h2>
+                    <v-col align="center" elevation="5">
+                      <h2 style="border: 2px solid black">{{ questions[currentQuestionIndex].question }}</h2>
                     </v-col>
                   </v-row>
-                  <ul>
+                  <ul style="list-style-type: none">
                     <v-row>
-                      <v-col align="center" >
+                      <v-col align="left">
                         <li v-for="(choice, choiceIndex) in questions[currentQuestionIndex].choices" :key="choiceIndex">
                           <label
-                            :class="{ 'correct': isCorrect(choice), 'incorrect': isSelected(choice) && !isCorrect(choice) }">
+                            :class="{ 'correct': isCorrect(choice), 'incorrect': isSelected(choice) && !isCorrect(choice) }"
+                            style="padding: 5px; ">
                             <input type="radio" :value="choice" v-model="selectedAnswer" :disabled="hasAnswered">
-                            {{ choice }}
+                            <span style="cursor: pointer">{{ choice }}</span>
                           </label>
                         </li>
                       </v-col>
                     </v-row>
                   </ul>
+
                   <v-row>
-                    <v-col align="center" >
-                      <button @click="nextQuestion">Next Question</button>
+                    <v-col align="center">
+                      <button @click="nextQuestion" class="quiz-button" style="font-weight: bold; font-size: 18px;"
+                        elevation="5">Next Question</button>
                     </v-col>
                   </v-row>
 
@@ -175,24 +178,23 @@ export default {
       const url = `https://opentdb.com/api.php?amount=${this.question_num}&difficulty=${this.difficulty.toLowerCase()}`;
       const response = await axios.get(url);
       const results = response.data.results;
-
       const questions = results.map((result) => {
-        const { question, correct_answer, incorrect_answers } = result;
+        let { question, correct_answer, incorrect_answers } = result;
+        // Remove special characters from question and answers
+        question = question.replace(/[^\w\s]/gi, '');
+        correct_answer = correct_answer.replace(/[^\w\s]/gi, '');
+        incorrect_answers = incorrect_answers.map(answer => answer.replace(/[^\w\s]/gi, ''));
         const choices = incorrect_answers.concat(correct_answer).sort();
-
         return {
           question,
           choices,
           answer: correct_answer,
         };
       });
-
-      console.log(questions);
       this.questions = questions;
-      console.log(this.questions);
     },
     performance_stats() {
-      this.result = (this.score / this.question_num) * 100;
+      this.result = ((this.score / this.question_num) * 100).toFixed(0);
       if (this.result >= 80) {
         this.performance = `Great job! You got ${this.result}% of the questions right!`;
       }
