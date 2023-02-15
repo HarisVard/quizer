@@ -1,13 +1,15 @@
 <template>
   <v-app :style="{ 'background-image': 'url(' + backgroundImage + ')', 'background-size': 'cover' }">
     <v-container>
+      <!-- The app bar that contains the name of the app, the score, and the remaining questions -->
       <v-app-bar color="#704214" height="50">
         <v-toolbar-title class="ml-0 mr-auto"
-          style="color: black;  font-weight: bold;font-size: 30px;">Quizer</v-toolbar-title>
+          style="color: black; font-weight: bold; font-size: 30px;">Quizer</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-row class="hidden-sm-and-down">
           <v-col cols="9"></v-col>
           <v-col>
+            <!-- The badge that displays the score -->
             <v-badge color="black" overlap>
               <template v-slot:badge>
                 <div style="display: flex; flex-direction: column;">
@@ -17,6 +19,7 @@
             </v-badge>
           </v-col>
           <v-col>
+            <!-- The badge that displays the remaining questions -->
             <v-badge color="black" overlap>
               <template v-slot:badge>
                 <div style="display: flex; flex-direction: column;">
@@ -30,11 +33,14 @@
     </v-container>
     <v-container>
       <v-card class="mx-auto my-auto" max-width="600" style="background-color: #A67C52;">
+        <!-- Welcome message row -->
         <v-row>
           <v-col></v-col>
           <v-col align="center" style="font-weight: bold; font-size: 25px;" elevation="5">Welcome!</v-col>
           <v-col></v-col>
         </v-row>
+
+        <!-- Player info row -->
         <v-row>
           <v-col align="center" style="font-weight: bold; font-size: 17px;" elevation="5">Player: {{ name }}</v-col>
           <v-col align="center" style="font-weight: bold; font-size: 17px;" elevation="5">Difficulty: {{
@@ -49,6 +55,7 @@
             <div>
               <div v-if="end">
 
+                <!-- Display the final score and performance -->
                 <v-row>
                   <v-col align="center"><span style="font-weight: bold; font-size: 17px;" elevation="5">Score: {{
                     score
@@ -58,6 +65,11 @@
                   <v-col align="center"><span style="font-weight: bold; font-size: 17px;" elevation="5">Result: {{
                     performance
                   }}</span></v-col>
+                </v-row>
+                <!-- Allow the user to finish the quiz -->
+                <v-row>
+                  <v-col align="center"><v-btn class="quiz-button" color="#704214" elevation="5"
+                      @click="onSubmit">Finish</v-btn></v-col>
                 </v-row>
               </div>
 
@@ -82,9 +94,10 @@
                     <v-row>
                       <v-col align="left">
                         <li v-for="(choice, choiceIndex) in questions[currentQuestionIndex].choices" :key="choiceIndex">
-                          <label
-                            :class="{ 'correct': isCorrect(choice), 'incorrect': isSelected(choice) && !isCorrect(choice) }"
-                            style="padding: 5px; ">
+                          <label :class="{
+                            'correct': isCorrect(choice), 'incorrect': isSelected(choice)
+                              && !isCorrect(choice), 'highlight': hasAnswered && !isCorrect(choice) && choice === correctAnswer
+                          }" style="padding: 5px;">
                             <input type="radio" :value="choice" v-model="selectedAnswer" :disabled="hasAnswered">
                             <span style="cursor: pointer">{{ choice }}</span>
                           </label>
@@ -92,31 +105,25 @@
                       </v-col>
                     </v-row>
                   </ul>
-
                   <v-row>
                     <v-col align="center">
                       <button @click="nextQuestion" class="quiz-button" style="font-weight: bold; font-size: 18px;"
                         elevation="5">Next Question</button>
                     </v-col>
                   </v-row>
-
                   <div v-if="!hasAnswered && submitted">
                     <p>Please select an answer before moving on to the next question.</p>
                   </div>
                 </div>
-
-
               </div>
-
             </div>
           </template>
         </v-container>
-
-
       </v-card>
     </v-container>
   </v-app>
 </template>
+
 <script>
 import axios from "axios";
 export default {
@@ -151,6 +158,9 @@ export default {
   methods: {
     startQuiz() {
       this.started = true;
+    },
+    onSubmit() {
+      this.$router.push('/');
     },
     nextQuestion() {
       this.submitted = true;
@@ -221,6 +231,10 @@ export default {
 
 .incorrect {
   color: red;
+}
+
+.highlight {
+  color: yellow;
 }
 
 .quiz-button {

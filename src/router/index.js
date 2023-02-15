@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import WelcomePage from '../views/WelcomePage.vue'
 import MainGame from '../views/MainGame.vue'
-import HelloWorld from '../components/HelloWorld.vue'
+
 
 
 Vue.use(VueRouter)
@@ -18,11 +18,7 @@ const routes = [
     name: 'MainGame',
     component: MainGame
   },
-  {
-    path: '/HelloWorld',
-    name: 'HelloWorld',
-    component: HelloWorld
-  },
+  
   {
     path: '/about',
     name: 'about',
