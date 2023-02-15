@@ -1,26 +1,26 @@
 <template>
   <v-app :style="{ 'background-image': 'url(' + backgroundImage + ')', 'background-size': 'cover' }">
     <v-container>
-      <v-app-bar color="indigo" height="50">
+      <v-app-bar color="#704214" height="50">
         <v-toolbar-title class="ml-0 mr-auto"
-          style="color: white; font-family: 'Creepster', sans-serif;">Quizer</v-toolbar-title>
+          style="color: black;  font-weight: bold;">Quizer</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-row class="hidden-sm-and-down">
           <v-col cols="9"></v-col>
           <v-col>
-            <v-badge color="red" overlap>
+            <v-badge color="black" overlap>
               <template v-slot:badge>
                 <div style="display: flex; flex-direction: column;">
-                  <span style="color: white;">Score: {{ score }}</span>
+                  <span style="color: #A67C52;">Score: {{ score }}</span>
                 </div>
               </template>
             </v-badge>
           </v-col>
           <v-col>
-            <v-badge color="blue" overlap>
+            <v-badge color="black" overlap>
               <template v-slot:badge>
                 <div style="display: flex; flex-direction: column;">
-                  <span style="color: white;">Remaining: {{ remainingQuestions }}</span>
+                  <span style="color: #A67C52;">Remaining: {{ remainingQuestions }}</span>
                 </div>
               </template>
             </v-badge>
@@ -29,18 +29,18 @@
       </v-app-bar>
     </v-container>
     <v-container>
-      <v-card class="mx-auto my-auto" max-width="600" style="background-color: #333;">
+      <v-card class="mx-auto my-auto" max-width="600" style="background-color: #A67C52;">
         <v-row>
           <v-col></v-col>
-          <v-col align="center" style="color: white; font-family: 'Creepster', sans-serif;">Welcome!</v-col>
+          <v-col align="center" >Welcome!</v-col>
           <v-col></v-col>
         </v-row>
         <v-row>
-          <v-col align="center" style="color: white; font-family: 'Creepster', sans-serif;">Player: {{ name }}!</v-col>
-          <v-col align="center" style="color: white; font-family: 'Creepster', sans-serif;">Difficulty: {{
+          <v-col align="center" >Player: {{ name }}</v-col>
+          <v-col align="center" >Difficulty: {{
             difficulty
           }}</v-col>
-          <v-col align="center" style="color: white; font-family: 'Creepster', sans-serif;">Questions: {{
+          <v-col align="center" >Questions: {{
             question_num
           }}</v-col>
         </v-row>
@@ -51,10 +51,12 @@
               <div v-if="end">
 
                 <v-row>
-                  <v-col align="center" style="color: white; font-family: 'Creepster', sans-serif;"><span style="color: white;">Score: {{ score }}</span></v-col>
+                  <v-col align="center" ><span
+                      style="color: white;">Score: {{ score }}</span></v-col>
                 </v-row>
                 <v-row>
-                  <v-col align="center" style="color: white; font-family: 'Creepster', sans-serif;"><span style="color: white;">Result: {{ performance }}</span></v-col>
+                  <v-col align="center" ><span
+                      style="color: white;">Result: {{ performance }}</span></v-col>
                 </v-row>
               </div>
 
@@ -63,19 +65,22 @@
               <div v-else>
                 <div v-if="!started">
                   <v-row>
-                    <v-col align="center" style="color: white; font-family: 'Creepster', sans-serif;"><button
-                        @click="startQuiz">Start Quiz</button></v-col>
+                    <v-col align="center">
+                      <button @click="startQuiz" class="quiz-button">Start Quiz</button>
+                    </v-col>
+
+
                   </v-row>
                 </div>
                 <div v-else>
                   <v-row>
-                    <v-col align="center" style="color: white; font-family: 'Creepster', sans-serif;">
+                    <v-col align="center" >
                       <h2>{{ questions[currentQuestionIndex].question }}</h2>
                     </v-col>
                   </v-row>
                   <ul>
                     <v-row>
-                      <v-col align="center" style="color: white; font-family: 'Creepster', sans-serif;">
+                      <v-col align="center" >
                         <li v-for="(choice, choiceIndex) in questions[currentQuestionIndex].choices" :key="choiceIndex">
                           <label
                             :class="{ 'correct': isCorrect(choice), 'incorrect': isSelected(choice) && !isCorrect(choice) }">
@@ -87,11 +92,11 @@
                     </v-row>
                   </ul>
                   <v-row>
-                    <v-col align="center" style="color: white; font-family: 'Creepster', sans-serif;">
+                    <v-col align="center" >
                       <button @click="nextQuestion">Next Question</button>
                     </v-col>
                   </v-row>
-                  
+
                   <div v-if="!hasAnswered && submitted">
                     <p>Please select an answer before moving on to the next question.</p>
                   </div>
@@ -119,7 +124,7 @@ export default {
       question_num: parseInt(this.$store.state.question_num),
       score: 0,
       remainingQuestions: this.$store.state.question_num,
-      backgroundImage: require('C:/Users/HarVard/Desktop/quizer/src/assets/riccardo-chiarini-XwIp301UMv8-unsplash.jpg'),
+      backgroundImage: require('C:/Users/HarVard/Desktop/quizer/src/assets/pexels-pixabay-220096.jpg'),
       questions: '',
       currentQuestionIndex: 0,
       selectedAnswer: '',
@@ -127,8 +132,8 @@ export default {
       hasAnswered: false,
       submitted: false,
       end: false,
-      performance:'',
-      result:'',
+      performance: '',
+      result: '',
     }
   },
   async mounted() {
@@ -186,15 +191,15 @@ export default {
       this.questions = questions;
       console.log(this.questions);
     },
-    performance_stats(){
+    performance_stats() {
       this.result = (this.score / this.question_num) * 100;
-      if(this.result >= 80){
-        this.performance = `Great job! You got ${this.result}% of the questions right!`;       
+      if (this.result >= 80) {
+        this.performance = `Great job! You got ${this.result}% of the questions right!`;
       }
-      else if(this.result <60){
+      else if (this.result < 60) {
         this.performance = `You can do better! You got ${this.result}% of the questions right!`;
       }
-      else{
+      else {
         this.performance = `Good job! You got ${this.result}% of the questions right!`;
       }
     }
@@ -214,5 +219,13 @@ export default {
 
 .incorrect {
   color: red;
+}
+
+.quiz-button {
+  color: black;
+  font-family: 'Creepster', sans-serif;
+  border: 2px solid black;
+  padding: 10px;
+  margin-top: 20px;
 }
 </style>
