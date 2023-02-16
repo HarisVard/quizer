@@ -100,7 +100,6 @@
                           }" style="padding: 5px;">
                             <!-- Bind the choice value to the radio button input and the selectedAnswer property using v-model, and disable the input if the user has already answered the question -->
                             <input type="radio" :value="choice" v-model="selectedAnswer" :disabled="hasAnswered">
-                            <!-- Render the choice text in a span element -->
                             <span style="cursor: pointer">{{ choice }}</span>
                           </label>
                         </li>
