@@ -54,7 +54,6 @@
           <template>
             <div>
               <div v-if="end">
-
                 <!-- Display the final score and performance -->
                 <v-row>
                   <v-col align="center"><span style="font-weight: bold; font-size: 17px;" elevation="5">Score: {{
@@ -72,10 +71,9 @@
                       @click="onSubmit">Finish</v-btn></v-col>
                 </v-row>
               </div>
-
-
-
+              <!-- Render a div with the v-else directive if the started property is false -->
               <div v-else>
+                <!-- Render a div with the v-if directive if the started property is true and the user has not answered any questions yet -->
                 <div v-if="!started">
                   <v-row>
                     <v-col align="center">
@@ -87,9 +85,11 @@
                 <div v-else>
                   <v-row>
                     <v-col align="center" elevation="5">
+                      <!-- Render a heading with the current question using the questions array and the currentQuestionIndex property -->
                       <h2 style="border: 2px solid black">{{ questions[currentQuestionIndex].question }}</h2>
                     </v-col>
                   </v-row>
+                  <!-- Render an unordered list to display the answer choices for the current question -->
                   <ul style="list-style-type: none">
                     <v-row>
                       <v-col align="left">
@@ -98,7 +98,9 @@
                             'correct': isCorrect(choice), 'incorrect': isSelected(choice)
                               && !isCorrect(choice), 'highlight': hasAnswered && !isCorrect(choice) && choice === correctAnswer
                           }" style="padding: 5px;">
+                            <!-- Bind the choice value to the radio button input and the selectedAnswer property using v-model, and disable the input if the user has already answered the question -->
                             <input type="radio" :value="choice" v-model="selectedAnswer" :disabled="hasAnswered">
+                            <!-- Render the choice text in a span element -->
                             <span style="cursor: pointer">{{ choice }}</span>
                           </label>
                         </li>
@@ -147,32 +149,40 @@ export default {
     }
   },
   async mounted() {
-    // GET request using axios with async/await
+    // When the component is mounted, generate the quiz questions
     this.generateQuestions();
   },
   computed: {
+    // A computed property that returns the correct answer for the current question
     correctAnswer() {
       return this.questions[this.currentQuestionIndex].answer;
     },
   },
   methods: {
+    // Start the quiz by setting the started property to true
     startQuiz() {
       this.started = true;
     },
     onSubmit() {
+      // Handle form submission and redirect to the home page
       this.$router.push('/');
     },
     nextQuestion() {
+      // Set the submitted property to true to indicate that the user has submitted their answer
       this.submitted = true;
+      // Check if the user has answered the question
       if (this.hasAnswered) {
         if (this.isCorrect(this.selectedAnswer)) {
           this.score++;
         }
+        // Move on to the next question
         this.currentQuestionIndex++;
+        // Reset hasAnswered and submitted to false to prepare for the next question
         this.hasAnswered = false;
         this.submitted = false;
         this.remainingQuestions--;
       }
+      // If there are no remaining questions, end the quiz and display performance stats
       if (this.remainingQuestions == 0) {
         this.end = true;
         this.performance_stats()
@@ -185,16 +195,21 @@ export default {
       return this.selectedAnswer === choice;
     },
     async generateQuestions() {
+      // Construct the API URL using the question_num and difficulty properties
       const url = `https://opentdb.com/api.php?amount=${this.question_num}&difficulty=${this.difficulty.toLowerCase()}`;
+      // Send a GET request to the API using axios and await the response
       const response = await axios.get(url);
       const results = response.data.results;
+      // Map the results array to create an array of question obje
       const questions = results.map((result) => {
         let { question, correct_answer, incorrect_answers } = result;
         // Remove special characters from question and answers
         question = question.replace(/[^\w\s]/gi, '');
         correct_answer = correct_answer.replace(/[^\w\s]/gi, '');
         incorrect_answers = incorrect_answers.map(answer => answer.replace(/[^\w\s]/gi, ''));
+        // Combine the correct answer with the incorrect answers and shuffle them
         const choices = incorrect_answers.concat(correct_answer).sort();
+        // Return a question object with the question, choices, and answer properties
         return {
           question,
           choices,
@@ -203,6 +218,7 @@ export default {
       });
       this.questions = questions;
     },
+    //set the performance base on the score and the nummber of questions
     performance_stats() {
       this.result = ((this.score / this.question_num) * 100).toFixed(0);
       if (this.result >= 80) {
