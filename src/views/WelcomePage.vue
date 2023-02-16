@@ -14,7 +14,6 @@
 
         <v-row>
           <v-col>
-            <!-- Warning message displayed if user did not fill out required fields -->
             <p v-if="warningMessage" style="color: red;">Please fill all required fields.</p>
           </v-col>
         </v-row>
