@@ -1,13 +1,10 @@
 <template>
   <v-app :style="{ 'background-image': 'url(' + backgroundImage + ')', 'background-size': 'cover' }">
     <v-card class="mx-auto my-auto" color="#A67C52" max-width="400">
-      <!-- Title of the card -->
       <v-card-title class="headline" color="#704214" style="font-size: 36px; font-weight: bold;">
         Welcome to the Quizer World!
       </v-card-title>
-
       <v-card-text>
-        <!-- Text fields for user to enter their name, number of questions, and difficulty level -->
         <v-text-field v-model="name" label="Name" color="#704214"></v-text-field>
         <v-select label="Number of questions" color="#704214" v-model="question_num" :items="number_of_questions"></v-select>
         <v-select label="Difficulty" color="#704214" v-model="difficulty" :items="difficultyLevels"></v-select>
@@ -18,9 +15,7 @@
           </v-col>
         </v-row>
       </v-card-text>
-
       <v-card-actions>
-        <!-- Button to submit user input and start the quiz -->
         <v-btn class="quiz-button" color="#704214" elevation="5" @click="onSubmit">Enter</v-btn>
       </v-card-actions>
     </v-card>
@@ -45,14 +40,12 @@ export default {
     onSubmit () {
       // Check if any of the fields are empty
       if (!this.name || !this.difficulty || !this.question_num) {
-        // Set warning message to true
         this.warningMessage = true;
       } else {
         // Set user's name, difficulty and number of questions in Vuex store
         this.$store.commit("setName", this.name);
         this.$store.commit("setDifficulty", this.difficulty);
         this.$store.commit("setQuestionsNumber", this.question_num);
-        // Redirect to main game page
         this.$router.push('maingame');
       }
     }
@@ -62,7 +55,6 @@ export default {
 
 
 <style>
-  /* Change primary and secondary colors to earth tones */
   :root {
     --v-primary-base: #704214;
     --v-secondary-base: #A67C52;

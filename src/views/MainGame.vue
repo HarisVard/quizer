@@ -148,26 +148,21 @@ export default {
     }
   },
   async mounted() {
-    // When the component is mounted, generate the quiz questions
     this.generateQuestions();
   },
   computed: {
-    // A computed property that returns the correct answer for the current question
     correctAnswer() {
       return this.questions[this.currentQuestionIndex].answer;
     },
   },
   methods: {
-    // Start the quiz by setting the started property to true
     startQuiz() {
       this.started = true;
     },
     onSubmit() {
-      // Handle form submission and redirect to the home page
       this.$router.push('/');
     },
     nextQuestion() {
-      // Set the submitted property to true to indicate that the user has submitted their answer
       this.submitted = true;
       // Check if the user has answered the question
       if (this.hasAnswered) {
@@ -176,7 +171,6 @@ export default {
         }
         // Move on to the next question
         this.currentQuestionIndex++;
-        // Reset hasAnswered and submitted to false to prepare for the next question
         this.hasAnswered = false;
         this.submitted = false;
         this.remainingQuestions--;
@@ -202,13 +196,11 @@ export default {
       // Map the results array to create an array of question obje
       const questions = results.map((result) => {
         let { question, correct_answer, incorrect_answers } = result;
-        // Remove special characters from question and answers
         question = question.replace(/[^\w\s]/gi, '');
         correct_answer = correct_answer.replace(/[^\w\s]/gi, '');
         incorrect_answers = incorrect_answers.map(answer => answer.replace(/[^\w\s]/gi, ''));
         // Combine the correct answer with the incorrect answers and shuffle them
         const choices = incorrect_answers.concat(correct_answer).sort();
-        // Return a question object with the question, choices, and answer properties
         return {
           question,
           choices,
