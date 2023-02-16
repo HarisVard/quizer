@@ -135,7 +135,7 @@ export default {
       question_num: parseInt(this.$store.state.question_num),
       score: 0,
       remainingQuestions: this.$store.state.question_num,
-      backgroundImage: require('C:/Users/HarVard/Desktop/quizer/src/assets/pexels-pixabay-220096.jpg'),
+      backgroundImage: require('../assets/pexels-pixabay-220096.jpg'),
       questions: '',
       currentQuestionIndex: 0,
       selectedAnswer: '',

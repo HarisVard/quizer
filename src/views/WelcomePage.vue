@@ -37,7 +37,7 @@ export default {
       question_num:'',
       difficultyLevels: ['Easy', 'Medium', 'Hard'],
       number_of_questions: ['5', '10', '15','20','25','30'],
-      backgroundImage: require('C:/Users/HarVard/Desktop/quizer/src/assets/pexels-pixabay-220096.jpg'),
+      backgroundImage: require('../assets/pexels-pixabay-220096.jpg'),
       warningMessage: false,
     }
   },
